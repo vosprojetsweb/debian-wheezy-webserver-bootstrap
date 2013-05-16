@@ -5,8 +5,12 @@
 #
 #	Copie des fichiers de configuration pout bash et vim
 #
-#	syntax : wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/post-install/setup.sh | sudo /bin/sh
+#	syntax : 
+#		Pour les utlisateurs non root
+#		wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/setup.sh | /bin/sh
 #
+#		Pour root
+#		wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/setup.sh | sudo /bin/sh
 
 set -e
 
@@ -25,6 +29,17 @@ NC='\e[0m'
 HOME_PATH=`grep $USERNAME /etc/passwd | cut -d: -f6`
 
 #.bashrc
-displaytitle ".bashrc"
-cp --no-clobber "${HOME_PATH}/.bashrc" "${HOME_PATH}/.bashrc-BACKUP"
-$WGET -O "${HOME_PATH}/.bashrc" https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/conf/bash/.bashrc
+DIST_FILE="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/conf/bash/.bashrc"
+LOCAL_FILE="${HOME_PATH}/.bashrc"
+
+displaytitle "-- Telechargement du fichier .bashrc
+$DIST_FILE"
+
+cp --no-clobber $FILE "${FILE}-BACKUP"
+$WGET -O $LOCAL_FILE $DIST_FILE
+
+
+
+
+
+ 
