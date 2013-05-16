@@ -14,6 +14,8 @@ if [ $EUID -ne 0 ]; then
   exit 1
 fi
 
+
+
 displaytitle() {
 	echo -e "\n\n${PURPLE}------------------------------------------------------------------------------"
 	echo  "$*"
@@ -23,7 +25,7 @@ displaytitle() {
 
 # Configuration
 APT_GET="apt-get --yes"
-WGET="wget -q -m --no-check-certificate"
+WGET="wget -m --no-check-certificate"
 PURPLE='\e[1;35m'
 NC='\e[0m'
 SOURCES_LIST="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/post-install/conf/sources.list"
@@ -33,7 +35,7 @@ SOURCES_LIST="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-boots
 displaytitle "-- Telechargement du fichier sources.list
 -- $SOURCES_LIST"
 
-cp /etc/apt/sources.list /etc/apt/sources.list-BACKUP
+cp --no-clobber /etc/apt/sources.list /etc/apt/sources.list-BACKUP
 $WGET -O /etc/apt/sources.list $SOURCES_LIST
 
 
