@@ -35,11 +35,14 @@ do
 	LOCAL_FILE="${HOME_PATH}/${filename}"
 	
 	displaytitle "-- Telechargement du fichier ${filename}
-	$DIST_FILE"
+-- $DIST_FILE"
 	
-	cp --no-clobber $LOCAL_FILE "${LOCAL_FILE}-BACKUP"
+	if [ -f $LOCAL_FILE ]
+	then 
+		cp --no-clobber $LOCAL_FILE "${LOCAL_FILE}-BACKUP"
+	fi
+	
 	$WGET -O $LOCAL_FILE $DIST_FILE
 done
-
 
 source $LOCAL_FILE
