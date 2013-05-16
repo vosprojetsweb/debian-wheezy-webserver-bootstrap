@@ -25,7 +25,6 @@ displaytitle() {
 WGET="wget -m --no-check-certificate"
 PURPLE='\e[1;35m'
 NC='\e[0m'
-
 HOME_PATH=`grep $USER /etc/passwd | cut -d: -f6`
 
 # Personnalisation bash

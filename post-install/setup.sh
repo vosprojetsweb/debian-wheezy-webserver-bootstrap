@@ -22,7 +22,6 @@ displaytitle() {
 	echo -e "------------------------------------------------------------------------------${NC}"
 }
 
-
 # Configuration
 APT_GET="apt-get --yes"
 WGET="wget -m --no-check-certificate"

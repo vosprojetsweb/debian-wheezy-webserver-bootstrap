@@ -1,0 +1,56 @@
+#!/bin/sh
+
+#
+# Source : 
+#   http://chemel.fr/debian-sample-iptables-configuration-script/
+#   http://www.cyberciti.biz/tips/linux-iptables-examples.html
+#
+# Pour installer ce firewall, placer ce fichier dans le repertoire /etc/network/if-up.d/
+# et le rendre exécutable
+
+
+IPT="/sbin/iptables"
+SSH_PORT="22"
+
+# Flush old rules, old custom tables
+$IPT --flush
+$IPT --delete-chain
+
+# Set default policies for all three default chains
+$IPT -P INPUT DROP 
+$IPT -P FORWARD DROP 
+$IPT -P OUTPUT ACCEPT
+
+# Enable free use of loopback interfaces
+$IPT -A INPUT -i lo -j ACCEPT
+
+#
+# bloquer les attaques
+#
+
+# Force SYN packets check
+$IPT -A INPUT -p tcp ! --syn -m state --state NEW -s 0.0.0.0/0 -j DROP
+
+# Force Fragments packets check
+$IPT -A INPUT -f -j DROP
+
+# XMAS packets
+$IPT -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
+
+# Drop all NULL packets
+$IPT -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+
+
+
+# Allow traffic already established to continue
+$IPT -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# SSH
+$IPT -A INPUT -p tcp --dport $SSH_PORT -m state --state NEW -j ACCEPT
+
+# HTTP
+$IPT -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT
+
+# HTTPS
+$IPT -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT
+
