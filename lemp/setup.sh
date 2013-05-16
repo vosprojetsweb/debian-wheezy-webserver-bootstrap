@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+#
+#	christophe.borsenberger@vosprojetsweb.pro
+#
+#	syntax : wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/lemp/setup.sh | sudo /bin/sh
+#
+
+
 # Test que le script est lance en root
 if [ $EUID -ne 0 ]; then
   echo "Le script doit etre lance en root !" 1>&2
@@ -21,8 +28,9 @@ LISTE="nginx"
 LISTE=$LISTE" php5 php5-fpm php5-apc php5-cli php5-xhprof php5-intl"
 
 #percona server
-LISTE=$LISTE" percona-server-server-5.5 percona-server-client-5.5 php5-mysqlnd percona-toolkit"
+LISTE=$LISTE" mysql-server-5.5 mysql-client-5.5 php5-mysqlnd percona-toolkit"
 
+displaytitle "-- Installation des paquets ${LISTE}"
 $APT_GET install $LISTE
 
 
