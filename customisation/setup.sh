@@ -28,14 +28,13 @@ NC='\e[0m'
 
 HOME_PATH=`grep $USER /etc/passwd | cut -d: -f6`
 
-#personnalisation bash
+# Personnalisation bash
+displaytitle "-- Personnalisation bash"
+
 for filename in ".bashrc" ".bash_aliases"
 do
 	DIST_FILE="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/conf/bash/${filename}"
 	LOCAL_FILE="${HOME_PATH}/${filename}"
-	
-	displaytitle "-- Telechargement du fichier ${filename}
--- $DIST_FILE"
 	
 	if [ -f $LOCAL_FILE ]
 	then 
@@ -46,3 +45,28 @@ do
 done
 
 source $LOCAL_FILE
+
+
+
+
+# Personnalisation vim
+displaytitle "-- Personnalisation VIM"
+
+mkdir -p "${HOME_PATH}/.vim/syntax"
+
+VIMRC="${HOME_PATH}/.vimrc"
+VIM_FILETYPE="${HOME_PATH}/.vim/filetype.vim"
+
+if [ -f $VIMRC ]
+then 
+	cp --no-clobber $VIMRC "${VIMRC}-BACKUP"
+fi
+
+if [ -f $VIM_FILETYPE ]
+then 
+	cp --no-clobber $VIM_FILETYPE "${VIM_FILETYPE}-BACKUP"
+fi
+
+$WGET -O $VIMRC "https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/conf/vim/.vimrc"
+$WGET -O $VIM_FILETYPE "https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/conf/vim/filetype.vim"
+$WGET -O "${HOME_PATH}/.vim/syntax/nginx.vim" "https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/conf/vim/syntax/nginx.vim"
