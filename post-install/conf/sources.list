@@ -1,0 +1,15 @@
+# Debian Main Repos
+deb http://ftp.fr.debian.org/debian/ wheezy main
+deb-src http://ftp.fr.debian.org/debian/ wheezy main
+
+# Debian Update Repos
+deb http://security.debian.org/ wheezy/updates main
+deb-src http://security.debian.org/ wheezy/updates main
+
+# Dotdeb - http://www.dotdeb.org
+deb http://packages.dotdeb.org wheezy all
+deb-src http://packages.dotdeb.org wheezy all
+
+# Percona - http://www.percona.com
+deb http://repo.percona.com/apt wheezy main
+deb-src http://repo.percona.com/apt wheezy main
