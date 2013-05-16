@@ -1,4 +1,11 @@
 #!/bin/bash
+
+#
+#	christophe.borsenberger@vosprojetsweb.pro
+#
+#	syntax : wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/post-install/setup.sh | sudo /bin/sh
+#
+
 set -e
 
 # Test que le script est lance en root
@@ -7,17 +14,37 @@ if [ $EUID -ne 0 ]; then
   exit 1
 fi
 
-# Configuration des outils
+displaymessage() {
+  echo "$*"
+}
+
+displaytitle() {
+  displaymessage "${PURPLE}------------------------------------------------------------------------------"
+  displaymessage "$*"
+  displaymessage "------------------------------------------------------------------------------${NC}"
+
+}
+
+
+# Configuration
 APT_GET="apt-get --yes"
-WGET="wget -m --no-check-certificate"
+WGET="wget -q -m --no-check-certificate"
+PURPLE='\e[1;35m'
+NC='\e[0m'
+SOURCES_LIST="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/post-install/conf/sources.list"
 
 
 ### 1. On installe le nouveau fichier source.list de apt
-SOURCES_LIST="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/post-install/conf/sources.list"
+displaytitle "-- Telechargement du fichier sources.list
+-- $SOURCES_LIST"
+
 cp /etc/apt/sources.list /etc/apt/sources.list-BACKUP
 $WGET -O /etc/apt/sources.list $SOURCES_LIST
 
-### 1.1 On installe les differentes cles des nouveaux depots
+
+### 2. On installe les differentes cles des nouveaux depots
+displaytitle "-- Installation des cles des nouveaux depots"
+
 # http://www.dotdeb.org/instructions/
 $WGET -O - http://www.dotdeb.org/dotdeb.gpg | apt-key add -
 
@@ -26,10 +53,17 @@ gpg --keyserver  hkp://keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
 gpg -a --export CD2EFD2A | apt-key add -
 
 
-### 2. On met a jour le systeme
+### 3. On met a jour le systeme
+displaytitle "-- Mise a jour du systeme"
 $APT_GET update
 $APT_GET upgrade
 
 
-### 3. On installe les logiciels / binaires necessaires
-$APT_GET install sudo debian-goodies vim logrotate
+### 4. On installe les paquets necessaires
+LIST="sudo debian-goodies vim logrotate"
+displaytitle "-- Installation des paquets ${LISTE}"
+$APT_GET install $LIST
+
+### 5. On verifie si des demons doivent etre relances
+displaytitle "-- Verification des demons"
+checkrestart
