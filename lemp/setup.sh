@@ -26,7 +26,6 @@ LISTE=$LISTE" percona-server-server-5.5 percona-server-client-5.5 php5-mysqlnd p
 $APT_GET install $LISTE
 
 
-
 ### 2. Configuration
 
 # nginx
@@ -45,8 +44,8 @@ $WGET -O "/etc/nginx/conf.d/php-fpm.conf" "${GIT}/lemp/conf/php-fpm/nginx-php-fp
 
 # mysql
 displaytitle "-- Configuration MySQL"
+$WGET -O "/etc/mysql/my.cnf" "${GIT}/lemp/conf/mysql/my.cnf"
 mysql_secure_installation
-
 
 
 displaytitle "-- Redemarrage des demons"
