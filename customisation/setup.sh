@@ -28,14 +28,18 @@ NC='\e[0m'
 
 HOME_PATH=`grep $USER /etc/passwd | cut -d: -f6`
 
-#.bashrc
-DIST_FILE="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/conf/bash/.bashrc"
-LOCAL_FILE="${HOME_PATH}/.bashrc"
+#personnalisation bash
+for filename in ".bashrc" ".bash_aliases"
+do
+	DIST_FILE="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/conf/bash/${filename}"
+	LOCAL_FILE="${HOME_PATH}/${filename}"
+	
+	displaytitle "-- Telechargement du fichier ${filename}
+	$DIST_FILE"
+	
+	cp --no-clobber $LOCAL_FILE "${LOCAL_FILE}-BACKUP"
+	$WGET -O $LOCAL_FILE $DIST_FILE
+done
 
-displaytitle "-- Telechargement du fichier .bashrc
-$DIST_FILE"
 
-cp --no-clobber $LOCAL_FILE "${LOCAL_FILE}-BACKUP"
-$WGET -O $LOCAL_FILE $DIST_FILE
-
- 
+source $LOCAL_FILE
