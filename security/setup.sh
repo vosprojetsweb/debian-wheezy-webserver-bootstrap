@@ -43,5 +43,5 @@ sysctl -p
 
 # fail2ban
 displaytitle "-- installation fail2ban"
-apt-get install fail2ban
+$APT_GET install fail2ban
 
