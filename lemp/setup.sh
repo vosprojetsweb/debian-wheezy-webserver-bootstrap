@@ -57,16 +57,19 @@ displaytitle "-- Configuration php-fpm"
 cp --no-clobber "/etc/php5/fpm/pool.d/www.conf" "/etc/php5/fpm/pool.d/www.example"
 $WGET -O "/etc/php5/fpm/conf.d/local.ini" "${GIT}/lemp/conf/php-fpm/local.ini"
 $WGET -O "/etc/php5/fpm/conf.d/local.conf" "${GIT}/lemp/conf/php-fpm/local.conf"
-$WGET -O "/etc/php5/fpm/pool.d/www.conf" "${GIT}/lemp/conf/php-fpm/local.conf"
+$WGET -O "/etc/php5/fpm/pool.d/www.conf" "${GIT}/lemp/conf/php-fpm/pool-www.conf"
 $WGET -O "/etc/nginx/conf.d/php-fpm.conf" "${GIT}/lemp/conf/php-fpm/nginx-php-fpm.conf"
+
+mkdir -p /var/log/php5/
 
 # mysql
 displaytitle "-- Configuration MySQL"
 $WGET -O "/etc/mysql/my.cnf" "${GIT}/lemp/conf/mysql/my.cnf"
-mysql_secure_installation
-
 
 displaytitle "-- Redemarrage des demons"
 /etc/init.d/nginx restart
 /etc/init.d/php5-fpm restart 
 /etc/init.d/mysql restart
+
+
+echo -e "${RED}!! Lancer la commande mysql_secure_installation !!${NC}"

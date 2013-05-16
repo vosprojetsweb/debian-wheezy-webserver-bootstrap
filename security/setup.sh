@@ -34,7 +34,6 @@ HOME_PATH=`grep $USER /etc/passwd | cut -d: -f6`
 # Firewall
 displaytitle "-- Telechargement firewall"
 $WGET -O "${HOME_PATH}/firewall" "https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/security/conf/firewall"
-echo -e "\n${RED}!!! Verifier que le port SSH est le bon avant d'installer le firewall !!!${NC}\n"
 
 # Sysctl
 displaytitle "-- Telechargement sysctl.conf"
@@ -45,3 +44,4 @@ sysctl -p
 displaytitle "-- installation fail2ban"
 $APT_GET install fail2ban
 
+echo -e "\n${RED}!!! Verifier que le port SSH est le bon avant d'installer le firewall !!!${NC}\n"
