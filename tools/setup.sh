@@ -40,9 +40,12 @@ $APT_GET install $LISTE
 # Composer : Gestion des dependances PHP
 # http://getcomposer.org/download/
 
-displaytitle "Installation de composer"
-$WGET -O - https://getcomposer.org/installer | php
-sudo mv composer.phar /usr/local/bin/composer
+if [ ! -f /usr/local/bin/composer ]
+then
+	displaytitle "Installation de composer"
+	$WGET -O - https://getcomposer.org/installer | php
+	sudo mv composer.phar /usr/local/bin/composer
+fi
 	
 	
 ### 2. Configuration
@@ -82,4 +85,4 @@ git config --system core.whitespace trailing-space
 displaytitle "Preparation monitoring nginx /  php-fpm"
 # On prepare un server nginx pour le monitoring de nginx et de php-fpm
 $WGET -O /etc/nginx/sites-available/monitoring "${GIT}/tools/conf/collectd/nginx-server-monitoring"
-ln -s /etc/nginx/sites-available/monitoring /etc/nginx/sites-enable/monitoring
+ln -s /etc/nginx/sites-available/monitoring /etc/nginx/sites-enabled/monitoring
