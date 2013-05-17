@@ -1,0 +1,21 @@
+server {
+    #On restreint l'accès : seul les scripts présents sur la machine pourront requêter ces urls
+    listen 127.0.0.1:80;
+    
+    deny all;
+    allow 127.0.0.1;
+    
+    # On evite de remplir les logs
+    access_log off;
+    
+    #Status de nginx
+    location = /nginx_status {
+        stub_status on;
+    }
+
+    #status & ping pour le pool "www"
+    location ~ ^/fpm_pool_www_(status | ping)$ {
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        include fastcgi_params;
+    }
+ }
