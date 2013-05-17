@@ -24,6 +24,7 @@ displaytitle() {
 APT_GET="apt-get --yes"
 WGET="wget -m --no-check-certificate"
 PURPLE='\e[1;35m'
+NC='\e[0m'
 GIT="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master"
 
 ### 1. Installation
