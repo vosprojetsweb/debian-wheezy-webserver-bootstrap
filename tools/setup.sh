@@ -60,7 +60,6 @@ adduser \
 	--group \
 	--disabled-password \
 	--home /var/git \
-	--no-create-home \
 	git
 
 # Creation du repertoire .ssh
