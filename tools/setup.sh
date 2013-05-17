@@ -31,10 +31,10 @@ GIT="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/mast
 # Git : gestionnaire des sources
 # Collectd : Monitoring
 # Log Watch : Analyse de log
-LISTE="git collectd logwatch"
+LISTE=" git collectd logwatch"
 
 displaytitle "Installation des paquets : ${LISTE}"
-$APT_GET $LISTE
+$APT_GET install $LISTE
 
 # Composer : Gestion des dependances PHP
 # http://getcomposer.org/download/
