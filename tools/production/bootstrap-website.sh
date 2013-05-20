@@ -61,7 +61,7 @@ chmod -R 700 $WEBSITE_DIR
 
 
 ### Creer le depot git, qui servira au deploiement du site
-if [[ ! -d $WEBSITE_DIR ]]
+if [[ ! -d $GIT_REPO ]]
 then
 	displaytitle "Creation du depot git ${GIT_REPO}"
 	mkdir -p $GIT_REPO
