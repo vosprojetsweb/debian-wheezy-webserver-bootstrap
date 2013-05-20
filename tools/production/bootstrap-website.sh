@@ -8,7 +8,7 @@
 #	- Preparer une configuration nginx sommaire pour faire tourner le site
 #
 # syntax
-#	wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/tools/production/bootstrap-website.sh | sudo /bin/sh -- -toto
+#	wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/tools/production/bootstrap-website.sh | sudo /bin/bash -s "server_name"
 #	
 #
 #
@@ -28,9 +28,6 @@ displaytitle() {
 	echo  "$*"
 	echo -e "------------------------------------------------------------------------------${NC}"
 }
-
-displaytitle $*
-exit 0
 
 ### Configuration
 WGET="wget -m --no-check-certificate"
@@ -54,26 +51,43 @@ NGINX_CONFIG_LINK="${PREFIX_NGINX_CONFIG}/sites-enabled/${SERVER_NAME}"
 
 ### Creer le dossier ou se trouvera le site
 displaytitle "Creation du repertoire ${WEBSITE_DIR}"
-mkdir -p $WEBSITE_DIR
+if [[ ! -d $WEBSITE_DIR ]]
+then
+	mkdir -p $WEBSITE_DIR
+fi
+
 chown -R $USERNAME:$USERNAME $WEBSITE_DIR
 chmod -R 700 $WEBSITE_DIR
 
+
 ### Creer le depot git, qui servira au deploiement du site
-displaytitle "Creation du depot git ${GIT_REPO}"
-mkdir -p $GIT_REPO
-git --bare init $GIT_REPO
-$WGET -O $GIT_HOOK_FILE "${GIT}/tools/conf/git/deploy.sh"
-sed -i "s|__SERVER_NAME__|${SERVER_NAME}|g" "$GIT_HOOK_FILE"
+if [[ ! -d $WEBSITE_DIR ]]
+then
+	displaytitle "Creation du depot git ${GIT_REPO}"
+	mkdir -p $GIT_REPO
+	git --bare init $GIT_REPO
+fi
+
+### Copie du hook qui deploiera le site web
+if [[ ! -f $GIT_HOOK_FILE ]]
+then
+	$WGET -O $GIT_HOOK_FILE "${GIT}/tools/conf/git/deploy.sh"
+	sed -i "s|__SERVER_NAME__|${SERVER_NAME}|g" "$GIT_HOOK_FILE"
+fi
 
 ### Preparer la configuration nginx
-displaytitle "Configuration server nginw ${NGINX_CONFIG_FILE}"
-$WGET -O $NGINX_CONFIG_FILE "${GIT}/tools/conf/nginx/php-mvc-website-template.conf"
-sed -i "s|__SERVER_NAME__|${SERVER_NAME}|g" "$NGINX_CONFIG_FILE"
-ln -s $NGINX_CONFIG_FILE $NGINX_CONFIG_LINK
-
-# Si tout est ok avec nginx, on le redemarre
-/usr/sbin/nginx -t
-if [ $? -eq 0 ];
+if [[ ! -f $NGINX_CONFIG_FILE ]]
 then
-	/etc/init.d/nginx restart
+	displaytitle "Configuration server nginw ${NGINX_CONFIG_FILE}"
+	$WGET -O $NGINX_CONFIG_FILE "${GIT}/tools/conf/nginx/php-mvc-website-template.conf"
+	sed -i "s|__SERVER_NAME__|${SERVER_NAME}|g" "$NGINX_CONFIG_FILE"
+	ln -s $NGINX_CONFIG_FILE $NGINX_CONFIG_LINK
+	
+	# Si tout est ok avec nginx, on le redemarre
+	/usr/sbin/nginx -t
+	if [ $? -eq 0 ];
+	then
+		/etc/init.d/nginx restart
+	fi
 fi
+
