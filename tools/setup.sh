@@ -65,6 +65,9 @@ adduser \
 	--home /var/git \
 	git
 
+# On autorise git a se connecter en ssh
+usermod -a -G sshusers git
+
 # Creation du repertoire .ssh
 mkdir /var/git/.ssh
 chmod 700 /var/git/.ssh
