@@ -50,24 +50,27 @@ NGINX_CONFIG_FILE="${PREFIX_NGINX_CONFIG}/sites-available/${SERVER_NAME}"
 NGINX_CONFIG_LINK="${PREFIX_NGINX_CONFIG}/sites-enabled/${SERVER_NAME}"
 
 ### Creer le dossier ou se trouvera le site
-displaytitle "Creation du repertoire ${WEBSITE_DIR}"
 if [[ ! -d $WEBSITE_DIR ]]
 then
+	displaytitle "Creation du repertoire ${WEBSITE_DIR}"
 	mkdir -p $WEBSITE_DIR
 fi
 
 chown -R $USERNAME:$USERNAME $WEBSITE_DIR
-chmod -R 760 $WEBSITE_DIR
+chmod -R 2770 $WEBSITE_DIR
 
 
 ### Creer le depot git, qui servira au deploiement du site
 if [[ ! -d $GIT_REPO ]]
 then
 	displaytitle "Creation du depot git ${GIT_REPO}"
-	mkdir -p $GIT_REPO
-	chown -R git:git $GIT_REPO
+	mkdir -p $GIT_REPO	
 	git --bare init $GIT_REPO
 fi
+
+chown -R git:git $GIT_REPO
+
+
 
 ### Copie du hook qui deploiera le site web
 if [[ ! -f $GIT_HOOK_FILE ]]
