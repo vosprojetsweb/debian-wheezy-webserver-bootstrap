@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+#
+# Deploiement via git
+#
+# @todo doc
+#
+#	Installer le script dans /usr/local/bin/git-deploy
+# wget -O /usr/local/bin/git-deploy ; chmod +x /usr/local/bin/git-deploy;  
+#
+
+set -e
+
+RED='\e[1;31m'
+NC='\e[0m'
+
+# Configuration du script
+dry_run=false
+repo_to_deloy="$(pwd)"
+deploy_local_repo="$(git config --get --path deploy.local.repo || true)"
+deploy_remote_repo="$(git config --get deploy.remote.repo || true)"
+# Les fichiers qu'on ignore lors du deploiement sont souvents différents de ceux ignorés par git
+# d'ou un second fichier 
+deploy_ignore_file="${repo_to_deloy}/.deployignore"
+
+# http://blog.onetechnical.com/2012/07/16/bash-getopt-versus-getopts/
+# Execute getopt
+ARGS=$(getopt -o "n" -l "dry-run" -n "getopt.sh" -- "$@");
+ 
+#Bad arguments
+if [ $? -ne 0 ];
+then
+	exit 1
+fi
+ 
+# A little magic
+eval set -- "$ARGS"
+
+# Now go through all the options
+while true;
+do
+  case "$1" in
+    -n|--dry-run)
+    	dry_run=true
+      shift;;
+ 
+       --)
+      shift
+      break;;
+  esac
+done
+
+
+if [ ! -d "${repo_to_deloy}/.git" ]
+then
+	echo -e $RED
+	echo "Le dossier ${repo_to_deloy} ne semble pas etre un depot git valide."
+	echo -e $NC
+	exit 1
+fi
+
+if [ -z "$deploy_local_repo" ]
+then
+	echo -e $RED
+	echo "Vous devez configurer deploy.local.repo"
+	echo "Exemple:"
+	echo "    git config --add deploy.local.repo /your/local/deploy/repo"
+	echo -e $NC
+	exit 2
+fi
+
+if [ -z "$deploy_remote_repo" ]
+then
+	echo -e $RED
+	echo "Vous devez configurer deploy.remote.repo"
+	echo "Exemple:"
+	echo "    git config --add deploy.remote.repo git@host.com:/path/to/git/repo"
+	echo -e $NC
+	exit 3
+fi
+
+# Si le depot local de deploiement n'existe pas encore, on le cree
+if [ ! -d "$deploy_local_repo" ]
+then
+	mkdir -p "${deploy_local_repo}"
+	cd "$deploy_local_repo"
+	git init
+	git remote add deploy "$deploy_remote_repo"
+fi
+
+
+# Preparation de la commande rsync, qui synchronise le repertoire de travail, 
+# avec le repertoire de deploiement
+rsync_options="-a -v --delete"
+
+if  $dry_run 
+then
+	rsync_options="${rsync_options} --dry-run"
+fi
+
+if [ -f "$deploy_ignore_file" ]
+then
+	rsync_options="${rsync_options} --exclude-from=${deploy_ignore_file}"
+fi
+ 
+rsync $rsync_options "$repo_to_deloy/" "$deploy_local_repo/"
+
+version="$(git describe --always --dirty)"
+
+echo $version
+
+cd "$deploy_local_repo"
+
+echo "Git add"
+git add -A
+
+echo "Git commit"
+git commit -m "Deployement $version"
+
+echo "Git push"
+git push deploy +master

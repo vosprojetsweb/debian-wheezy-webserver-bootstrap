@@ -8,7 +8,7 @@
 #	- Preparer une configuration nginx sommaire pour faire tourner le site
 #
 # syntax
-#	wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/tools/production/bootstrap-website.sh | sudo /bin/bash -s "server_name"
+#	wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/workflow/bootstrap-production-website | sudo /bin/bash -s "server_name"
 #	
 #
 #
@@ -30,7 +30,7 @@ displaytitle() {
 }
 
 ### Configuration
-WGET="wget -m --no-check-certificate"
+WGET="wget -m --no-check-certificate -q"
 PURPLE='\e[1;35m'
 NC='\e[0m'
 GIT="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master"
@@ -57,7 +57,7 @@ then
 fi
 
 chown -R $USERNAME:$USERNAME $WEBSITE_DIR
-chmod -R 700 $WEBSITE_DIR
+chmod -R 760 $WEBSITE_DIR
 
 
 ### Creer le depot git, qui servira au deploiement du site
@@ -65,21 +65,23 @@ if [[ ! -d $GIT_REPO ]]
 then
 	displaytitle "Creation du depot git ${GIT_REPO}"
 	mkdir -p $GIT_REPO
+	chown -R git:git $GIT_REPO
 	git --bare init $GIT_REPO
 fi
 
 ### Copie du hook qui deploiera le site web
 if [[ ! -f $GIT_HOOK_FILE ]]
 then
-	$WGET -O $GIT_HOOK_FILE "${GIT}/tools/conf/git/deploy.sh"
+	$WGET -O $GIT_HOOK_FILE "${GIT}/worklow/conf/git/hook-deploy"
 	sed -i "s|__SERVER_NAME__|${SERVER_NAME}|g" "$GIT_HOOK_FILE"
+	chmod +x "$GIT_HOOK_FILE"
 fi
 
 ### Preparer la configuration nginx
 if [[ ! -f $NGINX_CONFIG_FILE ]]
 then
-	displaytitle "Configuration server nginw ${NGINX_CONFIG_FILE}"
-	$WGET -O $NGINX_CONFIG_FILE "${GIT}/tools/conf/nginx/php-mvc-website-template.conf"
+	displaytitle "Configuration server nginx ${NGINX_CONFIG_FILE}"
+	$WGET -O $NGINX_CONFIG_FILE "${GIT}/workflow/conf/nginx/php-mvc-website-template.conf"
 	sed -i "s|__SERVER_NAME__|${SERVER_NAME}|g" "$NGINX_CONFIG_FILE"
 	ln -s $NGINX_CONFIG_FILE $NGINX_CONFIG_LINK
 	
@@ -90,4 +92,3 @@ then
 		/etc/init.d/nginx restart
 	fi
 fi
-

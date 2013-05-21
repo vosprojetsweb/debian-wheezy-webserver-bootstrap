@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+### Mise a jour des sources 
+export GIT_WORK_TREE=/var/www/__SERVER_NAME__
+git checkout -f master
+
+#chown -R www-data:www-data $GIT_WORK_TREE
+
+### TODO : Deploiement SQL
