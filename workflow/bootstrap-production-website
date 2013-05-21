@@ -77,8 +77,9 @@ if [[ ! -f $GIT_HOOK_FILE ]]
 then
 	$WGET -O $GIT_HOOK_FILE "${GIT}/worklow/conf/git/hook-deploy"
 	sed -i "s|__SERVER_NAME__|${SERVER_NAME}|g" "$GIT_HOOK_FILE"
-	chmod +x "$GIT_HOOK_FILE"
 fi
+
+chmod +x "$GIT_HOOK_FILE"
 
 ### Preparer la configuration nginx
 if [[ ! -f $NGINX_CONFIG_FILE ]]

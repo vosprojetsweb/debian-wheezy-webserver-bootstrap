@@ -105,6 +105,13 @@ fi
  
 rsync $rsync_options "$repo_to_deloy/" "$deploy_local_repo/"
 
+if  $dry_run 
+then
+    exit 0
+fi
+
+
+
 version="$(git describe --always --dirty)"
 
 echo $version
@@ -115,7 +122,7 @@ echo "Git add"
 git add -A
 
 echo "Git commit"
-git commit -m "Deployement $version"
+git diff --quiet --exit-code --cached || git commit -m "Deployement $version"
 
 echo "Git push"
 git push deploy +master
