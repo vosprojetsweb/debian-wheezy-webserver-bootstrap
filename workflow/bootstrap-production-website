@@ -75,7 +75,7 @@ chown -R git:git $GIT_REPO
 ### Copie du hook qui deploiera le site web
 if [[ ! -f $GIT_HOOK_FILE ]]
 then
-	$WGET -O $GIT_HOOK_FILE "${GIT}/worklow/conf/git/hook-deploy"
+	$WGET -O $GIT_HOOK_FILE "${GIT}/workflow/conf/git/hook-deploy"
 	sed -i "s|__SERVER_NAME__|${SERVER_NAME}|g" "$GIT_HOOK_FILE"
 fi
 
