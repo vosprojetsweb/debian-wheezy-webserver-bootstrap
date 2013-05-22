@@ -21,9 +21,15 @@ displaytitle() {
 }
 
 
+downloadAndBackup()
+{
+	displaytitle "Telechargement du fichier $1"
+	$WGET -O $2 $1
+}
+
 # Configuration
 APT_GET="apt-get --yes"
-WGET="wget -m --no-check-certificate"
+WGET="wget --no-check-certificate --backup-converted"
 PURPLE='\e[1;35m'
 RED='\e[1;31m'
 NC='\e[0m'
@@ -37,7 +43,7 @@ LISTE="nginx"
 #php-fpm
 LISTE=$LISTE" php5 php5-fpm php5-apc php5-cli php5-xhprof php5-intl"
 
-#percona server
+#mysql server
 LISTE=$LISTE" mysql-server-5.5 mysql-client-5.5 php5-mysqlnd percona-toolkit"
 
 displaytitle "-- Installation des paquets ${LISTE}"
@@ -48,23 +54,31 @@ $APT_GET install $LISTE
 
 # nginx
 displaytitle "-- Configuration Nginx"
-$WGET -O "/etc/nginx/nginx.conf" "${GIT}/lemp/conf/nginx/nginx.conf"
-$WGET -O "/etc/nginx/conf.d/http_security.conf" "${GIT}/lemp/conf/nginx/http_security.conf"
+downloadAndBackup "${GIT}/lemp/conf/nginx/nginx.conf" "/etc/nginx/nginx.conf"
+downloadAndBackup "${GIT}/lemp/conf/nginx/http_security.conf" "/etc/nginx/conf.d/http_security.conf"
 
 
 # php-fpm
 displaytitle "-- Configuration php-fpm"
-cp --no-clobber "/etc/php5/fpm/pool.d/www.conf" "/etc/php5/fpm/pool.d/www.example"
-$WGET -O "/etc/php5/fpm/conf.d/local.ini" "${GIT}/lemp/conf/php-fpm/local.ini"
-$WGET -O "/etc/php5/fpm/conf.d/local.conf" "${GIT}/lemp/conf/php-fpm/local.conf"
-$WGET -O "/etc/php5/fpm/pool.d/www.conf" "${GIT}/lemp/conf/php-fpm/pool-www.conf"
-$WGET -O "/etc/nginx/conf.d/php-fpm.conf" "${GIT}/lemp/conf/php-fpm/nginx-php-fpm.conf"
+downloadAndBackup "${GIT}/lemp/conf/php-fpm/pool-www.conf" "/etc/php5/fpm/pool.d/www.conf" 
+downloadAndBackup "${GIT}/lemp/conf/php-fpm/www.example.com.ini" "/etc/php5/conf.d/www.example.com.ini" 
+downloadAndBackup "${GIT}/lemp/conf/php-fpm/php-fpm.conf" "/etc/php5/fpm/php-fpm.conf" 
+downloadAndBackup "${GIT}/lemp/conf/php-fpm/nginx-php-fpm.conf" "/etc/nginx/conf.d/php-fpm.conf"
 
+
+# Configuration logs php
 mkdir -p /var/log/php5/
+downloadAndBackup "${GIT}/lemp/conf/php-fpm/logrotate.conf" "/etc/logrotate.d/php5-fpm"
+
+chown www-data:adm /var/log/php5/php_errors.log
+chmod 600 /var/log/php5/php_errors.log
+
 
 # mysql
 displaytitle "-- Configuration MySQL"
-$WGET -O "/etc/mysql/my.cnf" "${GIT}/lemp/conf/mysql/my.cnf"
+downloadAndBackup "${GIT}/lemp/conf/mysql/my.cnf" "/etc/mysql/my.cnf" 
+
+
 
 displaytitle "-- Redemarrage des demons"
 /etc/init.d/nginx restart

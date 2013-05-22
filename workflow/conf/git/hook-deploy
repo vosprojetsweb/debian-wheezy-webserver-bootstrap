@@ -6,6 +6,4 @@ set -e
 export GIT_WORK_TREE=/var/www/__SERVER_NAME__
 git checkout -f master
 
-#chown -R www-data:www-data $GIT_WORK_TREE
-
-### TODO : Deploiement SQL
+sudo /usr/local/bin/fix-www-rights $GIT_WORK_TREE

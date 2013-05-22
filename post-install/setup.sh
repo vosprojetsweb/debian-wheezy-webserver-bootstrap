@@ -54,12 +54,14 @@ displaytitle "-- Mise a jour du systeme"
 $APT_GET update
 $APT_GET upgrade
 
-
 ### 4. On installe les paquets necessaires
 LIST="sudo debian-goodies vim logrotate"
 displaytitle "-- Installation des paquets ${LISTE}"
 $APT_GET install $LIST
 
-### 5. On verifie si des demons doivent etre relances
+### 5. On defini l'environement de la machine : development | production
+echo production > /usr/local/etc/environment
+
+### 6. On verifie si des demons doivent etre relances
 displaytitle "-- Verification des demons"
 checkrestart

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+#
+#   Script permettant de remettre les bons droits sur les répertiores contenus dans /var/www,
+#   apres un deploiment
+#   Pour l'utilisateur git puisse executer ces commandes, il faut configurer sudo : 
+#   git localhost = NOPASSWD: /usr/local/bin/fix-www-rights
+#
+
+EXPECTED_ARGS=1
+E_BADARGS=65
+E_BADAPTH=66
+
+if [ $# -ne $EXPECTED_ARGS ]
+then
+  echo "Usage: fix-www-rights {directory}"
+  exit $E_BADARGS
+fi
+
+path="$(readlink -f $1)"
+
+if [[ "$path" != /var/www/* ]]
+then 
+    echo "you can only modify rights in /var/www"
+    exit $E_BADPATH
+fi
+
+find /var/www -print0 | xargs -0 chown www-data:www-data
+find /var/www -type d -print0 | xargs -0 chmod 770 
+find /var/www -type f -print0 | xargs -0 chmod 660

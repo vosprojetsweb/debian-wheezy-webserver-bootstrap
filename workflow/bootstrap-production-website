@@ -68,10 +68,6 @@ then
 	git --bare init $GIT_REPO
 fi
 
-chown -R git:git $GIT_REPO
-
-
-
 ### Copie du hook qui deploiera le site web
 if [[ ! -f $GIT_HOOK_FILE ]]
 then
@@ -80,6 +76,8 @@ then
 fi
 
 chmod +x "$GIT_HOOK_FILE"
+
+chown -R git:git $GIT_REPO
 
 ### Preparer la configuration nginx
 if [[ ! -f $NGINX_CONFIG_FILE ]]
