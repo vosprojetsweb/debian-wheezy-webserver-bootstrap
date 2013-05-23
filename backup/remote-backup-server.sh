@@ -7,7 +7,7 @@
 #		- répertoire /var/www
 #
 #	Script a installer sur la machine à sauvegarder, via la commande :
-#		wget -O /usr/local/bin/create-server-backup.sh  
+#		wget -O /usr/local/bin/server-backup.sh https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/backup/remote-backup-server.sh  
 #
 
 set -e
@@ -21,14 +21,14 @@ BACKUP_DIR="/var/local/backup"
 # Backup MySQL
 MYSQL_BACKUP_FILE="${BACKUP_DIR}/mysql.gz"
 rm -f "${MYSQL_BACKUP_FILE}"
-mysqldump --opt --all-databases --single-transaction | gzip -9 > "${MYSQL_BACKUP_FILE}"
+mysqldump -u YOUR_USER -p YOUR_PASSWORD --opt --all-databases --single-transaction | gzip -9 > "${MYSQL_BACKUP_FILE}"
 
 # Backup /etc
 ETC_BACKUP_FILE="${BACKUP_DIR}/etc.tar.gz"
 rm -f "${ETC_BACKUP_FILE}"
-/bin/tar -cvzf "${ETC_BACKUP_FILE}" /etc 
+/bin/tar -czf "${ETC_BACKUP_FILE}" /etc 
 
 # Backup /var/www
 WWW_BACKUP_FILE="${BACKUP_DIR}/www.tar.gz"
 rm -f "${WWW_BACKUP_FILE}"
-/bin/tar -cvzf "${WWW_BACKUP_FILE}" --exclude log --exlude tmp /var/www 
+/bin/tar -czf "${WWW_BACKUP_FILE}" --exclude "log" --exclude "tmp" /var/www 
