@@ -70,6 +70,7 @@ downloadAndBackup "${GIT}/lemp/conf/php-fpm/nginx-php-fpm.conf" "/etc/nginx/conf
 mkdir -p /var/log/php5/
 downloadAndBackup "${GIT}/lemp/conf/php-fpm/logrotate.conf" "/etc/logrotate.d/php5-fpm"
 
+touch /var/log/php5/php_errors.log
 chown www-data:adm /var/log/php5/php_errors.log
 chmod 600 /var/log/php5/php_errors.log
 

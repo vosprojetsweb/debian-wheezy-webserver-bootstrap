@@ -52,7 +52,7 @@ Tous les logs php se trouvent dans le répertoire /var/log/php5 :
 php_errors.log : log d'erreurs par défaut de php5
 php5-fpm.log : log global de php-fpm
 $pool-slow.log : log des requêtes pour le pool $pool
-$host.errors.log : erreur pour l'application accessible via l'hôte $host 
+$host.errors.log : erreur pour l'application accessible via l'hôte $host
 
 Rotation des logs : tous les jours
 
