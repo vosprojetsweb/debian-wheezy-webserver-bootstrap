@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # syntax
-#	wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/workflow/bootstrap-php-library | sudo /bin/bash -s "root_directory"
+#	wget --no-check-certificate -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/workflow/bootstrap-php-library | sudo /bin/bash -s "root_directory"
 #	
 #
 #
@@ -41,6 +41,7 @@ displaytitle "Creation du job jenkins"
 JENKINS_CLI="java -jar /var/lib/jenkins/jenkins-cli.jar -s http://localhost:8080"
 
 
-#$WGET -O -  $GITHUB
-#sed -e "s|__REPOSITORY_PATH__|${REPOSITORY}|" "$TEMPLATE_FILE" | $JENKINS_CLI create-job "${LIB_NAME}"
-#$JENKINS_CLI enable-job "${LIB_NAME}"
+# $WGET -O -  $GITHUB
+# sed -e "s|__REPOSITORY_PATH__|${REPOSITORY}|" "$TEMPLATE_FILE" | $JENKINS_CLI create-job "${LIB_NAME}"
+# $JENKINS_CLI enable-job "${LIB_NAME}"
+
