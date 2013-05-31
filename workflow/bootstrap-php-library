@@ -14,7 +14,7 @@ PURPLE='\e[1;35m'
 NC='\e[0m'
 GIT="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master"
 
-ROOT=${1:?"Erreur. Vous devez fournir le nom du repertoire racine. Exemple : /var/devel/mysuperlib}
+ROOT=${1:?"Erreur. Vous devez fournir le nom du repertoire racine. Exemple : /var/devel/mysuperlib"}
 LIB_NAME=`basename "${ROOT}"`
 
 displaytitle() {
