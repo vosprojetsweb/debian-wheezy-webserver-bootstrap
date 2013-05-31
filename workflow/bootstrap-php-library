@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# syntax
+#	wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/workflow/bootstrap-php-library | sudo /bin/bash -s "root_directory"
+#	
+#
+#
+# @author christophe.borsenberger@vosprojetsweb.pro
+#
+set -e
+
+WGET="wget -m --no-check-certificate -q"
+PURPLE='\e[1;35m'
+NC='\e[0m'
+GIT="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master"
+
+ROOT=${1:?"Erreur. Vous devez fournir le nom du repertoire racine. Exemple : /var/devel/mysuperlib}
+LIB_NAME=`basename "${ROOT}"`
+
+displaytitle() {
+	echo -e "\n\n${PURPLE}------------------------------------------------------------------------------"
+	echo  "$*"
+	echo -e "------------------------------------------------------------------------------${NC}"
+} 
+
+displaytitle "Creation de l'arborescence ${ROOT}"
+mkdir -p "${ROOT}/build" "${ROOT}/src" "${ROOT}/tests"
+
+displaytitle "Telechargement des fichiers necessaires a l'integration continue"
+$WGET -O "${ROOT}/build/phpcs.xml" "${GIT}/ci/php-quality/phpcs.xml"
+$WGET -O "${ROOT}/build/phpmd.xml" "${GIT}/ci/php-quality/phpmd.xml"
+$WGET -O "${ROOT}/build.xml" "${GIT}/ci/php-quality/build.xml"
+$WGET -O "${ROOT}/phpunit.xml.dist" "${GIT}/ci/php-quality/phpunit.xml.dist"
+
+#Edition des fichiers
+sed -i "s/__LIB_NAME__/${LIB_NAME}/g" "${ROOT}/build.xml"
+sed -i "s/__LIB_NAME__/${LIB_NAME}/g" "${ROOT}/phpunit.xml.dist"
+
+# Creation du job jenkins
+displaytitle "Creation du job jenkins"
+JENKINS_CLI="java -jar /var/lib/jenkins/jenkins-cli.jar -s http://localhost:8080"
+
+
+#$WGET -O -  $GITHUB
+#sed -e "s|__REPOSITORY_PATH__|${REPOSITORY}|" "$TEMPLATE_FILE" | $JENKINS_CLI create-job "${LIB_NAME}"
+#$JENKINS_CLI enable-job "${LIB_NAME}"

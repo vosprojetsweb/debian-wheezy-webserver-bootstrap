@@ -7,8 +7,8 @@
 #		- répertoire /var/www
 #
 #	Script a installer sur la machine à sauvegarder, via la commande :
-#		sudo wget -O /usr/local/bin/server-backup.sh https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/backup/remote-backup-server.sh
-#		sudo chmod 700 /usr/local/bin/server-backup.sh
+#		sudo wget -O /usr/local/bin/backup-server https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/backup/remote-backup-server.sh
+#		sudo chmod 700 /usr/local/bin/backup-server
 #
 
 set -e
