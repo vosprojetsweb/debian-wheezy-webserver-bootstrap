@@ -1,0 +1,11 @@
+build/*/
+vendor/
+logs/
+*local*
+
+#eclipse stuff
+.project
+.buildpath
+
+#MacOs
+.DS_Store

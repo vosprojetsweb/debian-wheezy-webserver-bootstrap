@@ -26,6 +26,11 @@ displaytitle() {
 displaytitle "Creation de l'arborescence ${ROOT}"
 mkdir -p "${ROOT}/build" "${ROOT}/src" "${ROOT}/tests"
 
+displaytitle "Initialisation git"
+cd "${ROOT}"
+git init
+$WGET -O "${ROOT}/.gitignore" "${GIT}/git/.gitignore"
+
 displaytitle "Telechargement des fichiers necessaires a l'integration continue"
 $WGET -O "${ROOT}/build/phpcs.xml" "${GIT}/ci/php-quality/phpcs.xml"
 $WGET -O "${ROOT}/build/phpmd.xml" "${GIT}/ci/php-quality/phpmd.xml"
@@ -37,7 +42,9 @@ sed -i "s/__LIB_NAME__/${LIB_NAME}/g" "${ROOT}/build.xml"
 sed -i "s/__LIB_NAME__/${LIB_NAME}/g" "${ROOT}/phpunit.xml.dist"
 
 # Creation du job jenkins
-displaytitle "Creation du job jenkins"
-JENKINS_CLI="java -jar /var/lib/jenkins/jenkins-cli.jar -s http://localhost:8080"
+#displaytitle "Creation du job jenkins"
+#JENKINS_CLI="java -jar /var/lib/jenkins/jenkins-cli.jar -s http://localhost:8080"
+#REPOSITORY="https://github.com/vosprojetsweb/${LIB_NAME}.git"
 
-
+#$WGET -O - "${GIT}/ci/jenkins/php-job-template.xml" | sed -e "s|__REPOSITORY_PATH__|${REPOSITORY}|" | $JENKINS_CLI create-job "${LIB_NAME}" 
+#$JENKINS_CLI enable-job "${LIB_NAME}"
