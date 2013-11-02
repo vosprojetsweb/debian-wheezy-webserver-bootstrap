@@ -42,5 +42,5 @@ $APT_GET install $LISTE
 ## Collectd
 displaytitle "Preparation monitoring nginx /  php-fpm"
 # On prepare un server nginx pour le monitoring de nginx et de php-fpm
-$WGET -O /etc/nginx/sites-available/monitoring "${GIT}/tools/conf/collectd/nginx-server-monitoring"
+$WGET -O /etc/nginx/sites-available/monitoring "${GIT}/monitoring/conf/collectd/nginx-server-monitoring"
 ln -s /etc/nginx/sites-available/monitoring /etc/nginx/sites-enabled/monitoring
