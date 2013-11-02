@@ -41,7 +41,7 @@ GIT="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/mast
 LISTE="nginx"
 
 #php-fpm
-LISTE=$LISTE" php5 php5-fpm php5-apc php5-cli php5-xhprof php5-intl"
+LISTE=$LISTE" php5 php5-fpm php5-apc php5-cli php5-xhprof php5-intl php5-curl"
 
 #mysql server
 LISTE=$LISTE" mysql-server-5.5 mysql-client-5.5 php5-mysqlnd percona-toolkit"
