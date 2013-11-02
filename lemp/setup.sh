@@ -44,7 +44,7 @@ LISTE="nginx"
 LISTE=$LISTE" php5 php5-fpm php5-apc php5-cli php5-xhprof php5-intl php5-curl"
 
 #mysql server
-LISTE=$LISTE" mysql-server-5.5 mysql-client-5.5 php5-mysqlnd percona-toolkit"
+LISTE=$LISTE" percona-server-server-5.6 percona-server-client-5.6 php5-mysqlnd percona-toolkit percona-xtrabackup percona-server-common-5.6"
 
 displaytitle "-- Installation des paquets ${LISTE}"
 $APT_GET install $LISTE
