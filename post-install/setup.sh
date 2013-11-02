@@ -45,7 +45,7 @@ displaytitle "-- Installation des cles des nouveaux depots"
 $WGET -O - http://www.dotdeb.org/dotdeb.gpg | apt-key add -
 
 # http://www.percona.com/doc/percona-server/5.5/installation/apt_repo.html
-gpg --keyserver  hkp://keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
+gpg --keyserver  hkp://pgp.mit.edu --recv-keys 1C4CBDCDCD2EFD2A
 gpg -a --export CD2EFD2A | apt-key add -
 
 
