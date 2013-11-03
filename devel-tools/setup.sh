@@ -49,7 +49,7 @@ git config --system core.whitespace trailing-space
 #Définir les fichiers à ignorer qui sont récurrents
 git config --system core.excludesfile /etc/git/.gitignore
 
-if [ ! -d "{GIT_CONFIG_DIR}" ]; then
+if [ ! -d "${GIT_CONFIG_DIR}" ]; then
 	mkdir "${GIT_CONFIG_DIR}"
 fi
 
