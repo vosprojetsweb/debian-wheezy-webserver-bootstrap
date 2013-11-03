@@ -4,7 +4,7 @@ set -e
 #
 #	christophe.borsenberger@vosprojetsweb.pro
 #
-#	syntax : wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/lemp/setup.sh | sudo /bin/sh
+#	syntax : wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/lemp/setup.sh | sudo /bin/bash
 #
 
 

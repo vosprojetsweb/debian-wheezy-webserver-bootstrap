@@ -3,7 +3,7 @@
 #
 #	christophe.borsenberger@vosprojetsweb.pro
 #
-#	syntax : wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/security/setup.sh | sudo /bin/sh
+#	syntax : wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/security/setup.sh | sudo /bin/bash
 #
 
 set -e

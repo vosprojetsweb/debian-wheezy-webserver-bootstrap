@@ -7,10 +7,10 @@
 #
 #	syntax : 
 #		Pour les utlisateurs non root
-#		wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/setup.sh | /bin/sh
+#		wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/setup.sh | /bin/bash
 #
 #		Pour root
-#		wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/setup.sh | sudo /bin/sh
+#		wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/customisation/setup.sh | sudo /bin/bash
 
 set -e
 

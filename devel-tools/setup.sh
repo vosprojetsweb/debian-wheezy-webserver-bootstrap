@@ -5,7 +5,7 @@
 #	
 #	Install : git, nodeJs, Composer, grunt, bower
 #
-#	syntax : wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/devel-tools/setup.sh | sudo /bin/sh
+#	syntax : wget -q -O - https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/devel-tools/setup.sh | sudo /bin/bash
 #
 
 set -e
