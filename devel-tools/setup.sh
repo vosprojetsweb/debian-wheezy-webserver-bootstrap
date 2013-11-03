@@ -29,6 +29,7 @@ WGET="wget --no-check-certificate"
 PURPLE='\e[1;35m'
 NC='\e[0m'
 GIT="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master"
+GIT_CONFIG_DIR="/etc/git"
 
 
 ### 1. On installe les paquets necessaires
@@ -47,7 +48,11 @@ git config --system core.editor vim
 git config --system core.whitespace trailing-space
 #Définir les fichiers à ignorer qui sont récurrents
 git config --system core.excludesfile /etc/git/.gitignore
-mkdir /etc/git
+
+if [ ! -d "{GIT_CONFIG_DIR}" ]; then
+	mkdir "${GIT_CONFIG_DIR}"
+fi
+
 $WGET -O /etc/git/.gitignore "${GIT}/devel-tools/conf/.gitignore"
 
 
