@@ -66,6 +66,9 @@ pear install --alldeps phpqatools/PHP_CodeBrowser
 sudo pear channel-discover pear.phpdoc.org
 sudo pear install phpdoc/phpDocumentor
 	
-### 9. php-cs-fixer
+### 10. php-cs-fixer
 wget http://cs.sensiolabs.org/get/php-cs-fixer.phar -O /usr/local/bin/php-cs-fixer
 chmod a+x /usr/local/bin/php-cs-fixer
+
+### 11. phpCPD
+pear install pear.phpunit.de/phpcpd
