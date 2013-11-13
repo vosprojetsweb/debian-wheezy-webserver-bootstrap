@@ -74,3 +74,8 @@ make install
 ### 5. Install Bower
 displaytitle "-- install bower"
 npm install -g bower
+
+
+### 6. Grunt-cli
+displaytitle "-- install grunt-cli"
+npm install -g grunt-cli
