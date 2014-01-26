@@ -83,8 +83,8 @@ fi
 ### Preparer la configuration PHP
 if [[ ! -f $PHP_CONFIG_FILE ]]
 then
-    displaytitle "Configuration server nginx ${NGINX_CONFIG_FILE}"
-    $WGET -O $PHP_CONFIG_FILE "${GIT}/lemp/conf/php/template.ini"
+    displaytitle "Configuration PHP-FPM ${PHP_CONFIG_FILE}"
+    $WGET -O $PHP_CONFIG_FILE "${GIT}/lemp/conf/php-fpm/template.ini"
     sed -i "s|__SERVER_NAME__|${SERVER_NAME}|g" "$PHP_CONFIG_FILE"
     ln -s $PHP_CONFIG_FILE $PHP_CONFIG_LINK
     
