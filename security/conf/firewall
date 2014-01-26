@@ -52,5 +52,7 @@ $IPT -A INPUT -p tcp --dport $SSH_PORT -m state --state NEW -j ACCEPT
 $IPT -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT
 
 # HTTPS
-$IPT -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT
+$IPT -A INPUT -p tcp --dport 443 -m state --state NEW -j ACCEPT
 
+# PING
+$IPT -A INPUT -p icmp -j ACCEPT

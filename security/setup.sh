@@ -29,15 +29,14 @@ WGET="wget -m --no-check-certificate"
 PURPLE='\e[1;35m'
 RED='\e[1;31m'
 NC='\e[0m'
-HOME_PATH=`grep $USER /etc/passwd | cut -d: -f6`
 
 # Firewall
 displaytitle "-- Telechargement firewall"
-$WGET -O "${HOME_PATH}/firewall" "https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/security/conf/firewall"
+$WGET -O "/etc/network/if-up.d/firewall" "https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/security/conf/firewall"
 
 # Sysctl
 displaytitle "-- Telechargement sysctl.conf"
-$WGET -O "/etc/sysctl.d/local.conf" "https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/security/conf/sysctl.conf"
+$WGET -O "/etc/sysctl.d/local.security_hardening.conf" "https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/security/conf/sysctl.conf"
 sysctl -p
 
 # fail2ban

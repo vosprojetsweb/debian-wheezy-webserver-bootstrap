@@ -62,6 +62,11 @@ $APT_GET install $LIST
 ### 5. On defini l'environement de la machine : development | production
 echo production > /usr/local/etc/environment
 
+### 6. On interdit l'utilisation d'ipv6
+displaytitle "-- Telechargement sysctl.conf"
+$WGET -O "/etc/sysctl.d/local.disable.ipv6.conf" "https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/post-install/conf/disable.ipv6.conf"
+sysctl -p
+
 ### 6. On verifie si des demons doivent etre relances
 displaytitle "-- Verification des demons"
 checkrestart
