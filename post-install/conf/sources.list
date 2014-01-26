@@ -10,6 +10,9 @@ deb-src http://security.debian.org/ wheezy/updates main
 deb http://packages.dotdeb.org wheezy all
 deb-src http://packages.dotdeb.org wheezy all
 
+deb http://packages.dotdeb.org wheezy-php55 all
+deb-src http://packages.dotdeb.org wheezy-php55 all
+
 # Percona - http://www.percona.com
 deb http://repo.percona.com/apt wheezy main
 deb-src http://repo.percona.com/apt wheezy main
