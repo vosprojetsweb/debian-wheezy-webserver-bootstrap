@@ -59,6 +59,10 @@ LIST="sudo debian-goodies vim logrotate cron-apt"
 displaytitle "-- Installation des paquets ${LISTE}"
 $APT_GET install $LIST
 
+### 4.1 : Configuration cron-apt
+echo 'MAILON="upgrade"' >> /etc/cron-apt/config
+
+
 ### 5. On defini l'environement de la machine : development | production
 echo production > /usr/local/etc/environment
 
