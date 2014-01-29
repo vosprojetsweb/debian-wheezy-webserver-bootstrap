@@ -55,7 +55,7 @@ $APT_GET update
 $APT_GET upgrade
 
 ### 4. On installe les paquets necessaires
-LIST="sudo debian-goodies vim logrotate"
+LIST="sudo debian-goodies vim logrotate cron-apt"
 displaytitle "-- Installation des paquets ${LISTE}"
 $APT_GET install $LIST
 
@@ -67,6 +67,6 @@ displaytitle "-- Telechargement sysctl.conf"
 $WGET -O "/etc/sysctl.d/local.disable.ipv6.conf" "https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master/post-install/conf/disable.ipv6.conf"
 sysctl -p
 
-### 6. On verifie si des demons doivent etre relances
+### 7. On verifie si des demons doivent etre relances
 displaytitle "-- Verification des demons"
 checkrestart
