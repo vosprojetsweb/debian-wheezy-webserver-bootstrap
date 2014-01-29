@@ -55,7 +55,7 @@ $APT_GET update
 $APT_GET upgrade
 
 ### 4. On installe les paquets necessaires
-LIST="sudo debian-goodies vim logrotate cron-apt"
+LIST="sudo debian-goodies vim logrotate cron-apt openntpd"
 displaytitle "-- Installation des paquets ${LISTE}"
 $APT_GET install $LIST
 

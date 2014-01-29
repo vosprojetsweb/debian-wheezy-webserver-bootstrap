@@ -41,10 +41,10 @@ GIT="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/mast
 LISTE="nginx"
 
 #php-fpm
-LISTE=$LISTE" php5 php5-fpm php5-apc php5-cli php5-xhprof php5-intl php5-curl"
+LISTE=$LISTE" php5 php5-fpm php5-cli php5-xhprof php5-intl php5-curl"
 
 #mysql server
-LISTE=$LISTE" percona-server-server-5.6 percona-server-client-5.6 php5-mysqlnd percona-toolkit percona-xtrabackup percona-server-common-5.6"
+LISTE=$LISTE" percona-server-server-5.6 percona-server-client-5.6 php5-mysqlnd percona-toolkit percona-xtrabackup percona-server-common-5.6 mysql-common"
 
 displaytitle "-- Installation des paquets ${LISTE}"
 $APT_GET install $LISTE
