@@ -48,8 +48,7 @@ WEBSITE_DIR="${PREFIX_WEBSITE_DIR}/${SERVER_NAME}"
 NGINX_CONFIG_FILE="${PREFIX_NGINX_CONFIG}/sites-available/${SERVER_NAME}"
 NGINX_CONFIG_LINK="${PREFIX_NGINX_CONFIG}/sites-enabled/${SERVER_NAME}"
 
-PHP_CONFIG_FILE="${PREFIX_PHP_CONFIG}/conf.d/${SERVER_NAME}.ini"
-PHP_CONFIG_LINK="${PREFIX_PHP_CONFIG}/fpm/conf.d/99-${SERVER_NAME}.ini"
+PHP_CONFIG_FILE="${PREFIX_PHP_CONFIG}/fpm/conf.d/99-${SERVER_NAME}.ini"
 
 ### Creer le dossier ou se trouvera le site
 if [[ ! -d $WEBSITE_DIR ]]
@@ -79,14 +78,12 @@ then
 fi
 
 
-
 ### Preparer la configuration PHP
 if [[ ! -f $PHP_CONFIG_FILE ]]
 then
     displaytitle "Configuration PHP-FPM ${PHP_CONFIG_FILE}"
     $WGET -O $PHP_CONFIG_FILE "${GIT}/lemp/conf/php-fpm/template.ini"
     sed -i "s|__SERVER_NAME__|${SERVER_NAME}|g" "$PHP_CONFIG_FILE"
-    ln -s $PHP_CONFIG_FILE $PHP_CONFIG_LINK
     
     # Si tout est ok avec nginx, on le redemarre
     /usr/sbin/php5-fpm -t
