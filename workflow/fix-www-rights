@@ -26,5 +26,5 @@ then
 fi
 
 find $path -print0 | xargs -0 chown www-data:www-data
-find $path -type d -print0 | xargs -0 chmod 770 
-find $path -type f -print0 | xargs -0 chmod 660
+find $path -type d -print0 | xargs -0 chmod 750 
+find $path -type f -print0 | xargs -0 chmod 640

@@ -56,6 +56,12 @@ $APT_GET install $LISTE
 displaytitle "-- Configuration Nginx"
 downloadAndBackup "${GIT}/lemp/conf/nginx/nginx.conf" "/etc/nginx/nginx.conf"
 downloadAndBackup "${GIT}/lemp/conf/nginx/http_security.conf" "/etc/nginx/conf.d/http_security.conf"
+downloadAndBackup "${GIT}/lemp/conf/nginx/http_auth.conf" "/etc/nginx/conf.d/http_auth.conf"
+
+# Création du fichier contenant les mots de passe liés à l'authentification http
+touch /etc/nginx/.htpasswd
+chown root:www-data /etc/nginx/.htpasswd
+chmod 640 /etc/nginx/.htpasswd
 
 
 # php-fpm
@@ -77,7 +83,11 @@ chmod 600 /var/log/php5/php_errors.log
 
 # mysql
 displaytitle "-- Configuration MySQL"
-downloadAndBackup "${GIT}/lemp/conf/mysql/my.cnf" "/etc/mysql/my.cnf" 
+mkdir -p /var/log/mysql/
+mkdir /etc/mysql/conf.d/
+touch /etc/mysql/conf.d/.keepme
+downloadAndBackup "${GIT}/lemp/conf/mysql/my.cnf" "/etc/mysql/my.cnf"
+
 
 
 

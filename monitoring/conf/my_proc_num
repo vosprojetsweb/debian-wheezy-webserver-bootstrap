@@ -1,0 +1,1 @@
+UserParameter=my_proc.num[*],sudo /usr/bin/pgrep -f -c "$1"

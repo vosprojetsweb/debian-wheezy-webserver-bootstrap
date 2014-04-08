@@ -1,0 +1,2 @@
+#Autorise zabbix à lister les processus
+zabbix ALL=(root) NOPASSWD: /usr/bin/pgrep

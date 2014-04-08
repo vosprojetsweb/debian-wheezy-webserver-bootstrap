@@ -27,10 +27,8 @@ PURPLE='\e[1;35m'
 NC='\e[0m'
 GIT="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master"
 
-### 1. Installation
-# Collectd : Monitoring
-# Log Watch : Analyse de log
-LISTE="collectd logwatch"
+### 1. Installation Zabbix
+LISTE="zabbix-server-mysql zabbix-frontend-php"
 
 displaytitle "Installation des paquets : ${LISTE}"
 $APT_GET install $LISTE

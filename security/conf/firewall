@@ -56,3 +56,9 @@ $IPT -A INPUT -p tcp --dport 443 -m state --state NEW -j ACCEPT
 
 # PING
 $IPT -A INPUT -p icmp -j ACCEPT
+
+# Zabbix agent
+$IPT -A INPUT -p tcp --dport xxx -m state --state NEW -j ACCEPT
+
+# Zabbix server
+$IPT -A INPUT -p tcp --dport xxx -m state --state NEW -j ACCEPT
