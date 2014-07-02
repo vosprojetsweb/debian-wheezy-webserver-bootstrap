@@ -27,17 +27,14 @@ PURPLE='\e[1;35m'
 NC='\e[0m'
 GIT="https://raw.github.com/vosprojetsweb/debian-wheezy-webserver-bootstrap/master"
 
-### 1. Installation Zabbix
-LISTE="zabbix-server-mysql zabbix-frontend-php"
+### 1. Installation Zabbix & Sysstat
+LISTE="zabbix-server-mysql zabbix-frontend-php sysstat"
 
 displaytitle "Installation des paquets : ${LISTE}"
 $APT_GET install $LISTE
-
 	
 	
-### 2. Configuration
-
-## Collectd
+### 2. Configuration 
 displaytitle "Preparation monitoring nginx /  php-fpm"
 # On prepare un server nginx pour le monitoring de nginx et de php-fpm
 $WGET -O /etc/nginx/sites-available/monitoring "${GIT}/monitoring/conf/collectd/nginx-server-monitoring"
