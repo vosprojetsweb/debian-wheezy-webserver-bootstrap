@@ -57,6 +57,7 @@ displaytitle "-- Configuration Nginx"
 downloadAndBackup "${GIT}/lemp/conf/nginx/nginx.conf" "/etc/nginx/nginx.conf"
 downloadAndBackup "${GIT}/lemp/conf/nginx/http_security.conf" "/etc/nginx/conf.d/http_security.conf"
 downloadAndBackup "${GIT}/lemp/conf/nginx/http_auth.conf" "/etc/nginx/conf.d/http_auth.conf"
+downloadAndBackup "${GIT}/lemp/conf/nginx/geoip.conf" "/etc/nginx/conf.d/geoip.conf"
 
 # Création du fichier contenant les mots de passe liés à l'authentification http
 touch /etc/nginx/.htpasswd
@@ -87,6 +88,18 @@ mkdir -p /var/log/mysql/
 mkdir /etc/mysql/conf.d/
 touch /etc/mysql/conf.d/.keepme
 downloadAndBackup "${GIT}/lemp/conf/mysql/my.cnf" "/etc/mysql/my.cnf"
+
+# GeoIP City
+displaytitle "-- Download GeoIP maxmind databases"
+mkdir -p /usr/local/share/GeoIP
+chmod 775 /usr/local/share/GeoIP
+
+wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz -O /usr/local/share/GeoIP/GeoLiteCity.dat.gz
+gunzip /usr/local/share/GeoIP/GeoLiteCity.dat.gz
+
+# GeoIP Country
+wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz -O /usr/local/share/GeoIP/GeoIP.dat.gz
+gunzip /usr/local/share/GeoIP/GeoIP.dat.gz
 
 
 
