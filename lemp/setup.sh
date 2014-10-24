@@ -55,9 +55,9 @@ $APT_GET install $LISTE
 # nginx
 displaytitle "-- Configuration Nginx"
 downloadAndBackup "${GIT}/lemp/conf/nginx/nginx.conf" "/etc/nginx/nginx.conf"
-downloadAndBackup "${GIT}/lemp/conf/nginx/http_security.conf" "/etc/nginx/conf.d/http_security.conf"
-downloadAndBackup "${GIT}/lemp/conf/nginx/http_auth.conf" "/etc/nginx/conf.d/http_auth.conf"
-downloadAndBackup "${GIT}/lemp/conf/nginx/geoip.conf" "/etc/nginx/conf.d/geoip.conf"
+downloadAndBackup "${GIT}/lemp/conf/nginx/conf.d/http_security.conf" "/etc/nginx/conf.d/http_security.conf"
+downloadAndBackup "${GIT}/lemp/conf/nginx/conf.d/http_auth.conf" "/etc/nginx/conf.d/http_auth.conf"
+downloadAndBackup "${GIT}/lemp/conf/nginx/conf.d/geoip.conf" "/etc/nginx/conf.d/geoip.conf"
 
 # Création du fichier contenant les mots de passe liés à l'authentification http
 touch /etc/nginx/.htpasswd
